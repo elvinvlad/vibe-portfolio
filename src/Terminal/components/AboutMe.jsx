@@ -10,7 +10,7 @@ export default function AboutMe() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="font-heading text-6xl md:text-[10vw] font-black text-white text-center tracking-tighter mb-6 leading-none uppercase"
+                className="font-heading text-5xl md:text-[8vw] font-black text-white text-center tracking-tighter mb-6 leading-none uppercase"
             >
                 Обо мне
             </motion.h2>
@@ -35,7 +35,7 @@ export default function AboutMe() {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="max-w-4xl mx-auto text-center mb-16 px-4"
             >
-                <h3 className="text-2xl md:text-4xl lg:text-5xl font-semibold text-white leading-snug md:leading-tight tracking-tight">
+                <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold text-white leading-snug md:leading-tight tracking-tight">
                     [ Я Владос Садыйков. Архитектор систем. Я создаю не просто ботов, а полноценные автономные экосистемы. Моя цель — избавить B2B-компании от рутины с помощью высокоточных алгоритмов и AI-агентов. ]
                 </h3>
             </motion.div>
@@ -46,16 +46,16 @@ export default function AboutMe() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="relative w-full max-w-2xl mx-auto aspect-[4/5] md:aspect-square rounded-[2.5rem] overflow-hidden mb-16 border border-white/10 group"
+                className="relative w-full max-w-md mx-auto aspect-[4/5] md:aspect-square rounded-[2.5rem] overflow-hidden mb-16 border border-white/10 group cursor-pointer"
             >
                 {/* Gradient Overlay for aesthetic consistency */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-accent/20 mix-blend-overlay z-10 opacity-60 group-hover:opacity-20 transition-opacity duration-700"></div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-accent/20 mix-blend-overlay z-10 opacity-30 group-hover:opacity-0 transition-opacity duration-700"></div>
                 {/* Fallback pattern bg if image doesn't load/exist */}
                 <div className="absolute inset-0 bg-dark-card -z-10"></div>
                 <img
-                    src="/avatar.jpg"
+                    src="/avatar.png"
                     alt="Владос Садыйков"
-                    className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     onError={(e) => {
                         e.target.style.display = 'none';
                     }}
