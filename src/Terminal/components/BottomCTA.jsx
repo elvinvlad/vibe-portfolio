@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 export default function BottomCTA() {
     return (
-        <section className="py-40 px-6 relative min-h-[70vh] flex items-center justify-center">
+        <section className="py-20 px-6 relative min-h-[50vh] flex items-center justify-center">
 
 
 

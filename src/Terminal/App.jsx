@@ -3,6 +3,7 @@ import { Header as Navigation } from '../components/ui/header-2';
 import Hero from './components/Hero';
 import SocialProof from './components/SocialProof';
 import Features from './components/Features';
+import AboutMe from './components/AboutMe';
 import BottomCTA from './components/BottomCTA';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -25,6 +26,7 @@ export default function App() {
                 <Hero />
                 <SocialProof />
                 <Features />
+                <AboutMe />
                 <BottomCTA />
                 <Contact />
             </main>
