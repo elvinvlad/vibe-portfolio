@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { fadeUpVariant, staggerContainer } from '../../Architecture/variants';
+import { Typewriter } from '../../components/ui/typewriter';
 
 
 export default function Hero() {
@@ -27,10 +28,25 @@ export default function Hero() {
 
                     <motion.h1
                         variants={fadeUpVariant}
-                        className="font-heading text-4xl md:text-5xl lg:text-h1 font-black leading-[1.1] text-white"
+                        className="font-heading text-4xl md:text-5xl lg:text-h1 font-black leading-[1.2] text-white min-h-[140px] md:min-h-[160px] lg:min-h-[180px]"
                         style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}
                     >
-                        Бизнес на автопилоте с помощью AI.
+                        Бизнес на автопилоте с<br className="hidden sm:block" />{' '}
+                        <Typewriter
+                            text={[
+                                "помощью AI",
+                                "умными агентами",
+                                "n8n и Make",
+                                "нулевой рутиной"
+                            ]}
+                            speed={70}
+                            className="bg-clip-text text-transparent bg-gradient-to-r from-primary-light to-accent"
+                            waitTime={2500}
+                            deleteSpeed={40}
+                            cursorChar={"_"}
+                            cursorClassName="text-primary-light ml-1"
+                        />
+                        <span className="text-white">.</span>
                     </motion.h1>
 
                     <motion.p
