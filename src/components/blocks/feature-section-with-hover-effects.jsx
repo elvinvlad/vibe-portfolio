@@ -1,21 +1,21 @@
 import { cn } from "../../lib/utils";
 import {
-    IconBot,
-    IconSparkles,
-    IconMicrophone,
-    IconSettingsAutomation,
-    IconZoomInArea,
-    IconTrendingUp,
-} from "@tabler/icons-react";
+    Bot,
+    Sparkles,
+    Mic,
+    Workflow,
+    Search,
+    TrendingUp,
+} from "lucide-react";
 import { features as dataFeatures } from "../../Network/data";
 
 const iconMap = {
-    Bot: <IconBot />,
-    Sparkles: <IconSparkles />,
-    Mic: <IconMicrophone />,
-    Workflow: <IconSettingsAutomation />,
-    Search: <IconZoomInArea />,
-    TrendingUp: <IconTrendingUp />
+    Bot: <Bot size={24} />,
+    Sparkles: <Sparkles size={24} />,
+    Mic: <Mic size={24} />,
+    Workflow: <Workflow size={24} />,
+    Search: <Search size={24} />,
+    TrendingUp: <TrendingUp size={24} />
 };
 
 export function FeaturesSectionWithHoverEffects() {
