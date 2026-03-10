@@ -4,7 +4,7 @@ import { Send } from 'lucide-react';
 
 export default function Contact() {
     return (
-        <section id="contact" className="py-32 px-6 relative flex flex-col items-center min-h-[80vh]">
+        <section id="contact" className="py-16 px-6 relative flex flex-col items-center min-h-[60vh]">
             <div className="max-w-4xl mx-auto w-full z-10">
                 <div className="text-center mb-16">
                     <motion.div

@@ -15,7 +15,7 @@ const iconMap = {
 
 export default function Features() {
     return (
-        <section id="features" className="py-32 px-6 relative">
+        <section id="features" className="py-16 px-6 relative">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16">
                     <motion.h2
