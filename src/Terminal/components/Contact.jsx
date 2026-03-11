@@ -1,8 +1,55 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Send, User, Mail, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, User, Mail, ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react';
+
+const WEBHOOK_URL = 'https://vlados-ai.ru/webhook/vlados-form';
 
 export default function Contact() {
+    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [status, setStatus] = useState('idle'); // idle | loading | success | error
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleChange = (e) => {
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+            setErrorMessage('Пожалуйста, заполните все поля');
+            setStatus('error');
+            setTimeout(() => setStatus('idle'), 4000);
+            return;
+        }
+
+        setStatus('loading');
+        setErrorMessage('');
+
+        try {
+            const response = await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+
+            if (result.success !== false) { // Assuming success or empty n8n response means OK
+                setStatus('success');
+                setFormData({ name: '', email: '', message: '' });
+                setTimeout(() => setStatus('idle'), 5000);
+            } else {
+                throw new Error('Server error');
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            setStatus('error');
+            setErrorMessage('Ошибка отправки. Попробуйте ещё раз.');
+            setTimeout(() => setStatus('idle'), 5000);
+        }
+    };
+
     return (
         <section id="contact" className="py-16 px-6 relative flex flex-col items-center min-h-[60vh]">
             <div className="max-w-2xl mx-auto w-full z-10">
@@ -47,7 +94,7 @@ export default function Contact() {
 
                     <form
                         className="relative bg-dark-card border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-2xl glass flex flex-col gap-6"
-                        onSubmit={(e) => e.preventDefault()}
+                        onSubmit={handleSubmit}
                     >
                         <div>
                             <label className="block text-white font-semibold mb-3 tracking-wide" htmlFor="name">Имя</label>
@@ -58,8 +105,12 @@ export default function Contact() {
                                 <input
                                     type="text"
                                     id="name"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
                                     className="w-full bg-[#0A0A14]/80 border border-white/10 rounded-2xl pl-12 pr-5 py-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 shadow-inner"
                                     placeholder="Как к вам обращаться?"
+                                    disabled={status === 'loading'}
                                 />
                             </div>
                         </div>
@@ -73,8 +124,12 @@ export default function Contact() {
                                 <input
                                     type="text"
                                     id="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     className="w-full bg-[#0A0A14]/80 border border-white/10 rounded-2xl pl-12 pr-5 py-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 shadow-inner"
                                     placeholder="@username или почта"
+                                    disabled={status === 'loading'}
                                 />
                             </div>
                         </div>
@@ -83,19 +138,53 @@ export default function Contact() {
                             <label className="block text-white font-semibold mb-3 tracking-wide" htmlFor="message">Сообщение</label>
                             <textarea
                                 id="message"
+                                name="message"
+                                value={formData.message}
+                                onChange={handleChange}
                                 rows="5"
                                 className="w-full bg-[#0A0A14]/80 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 resize-none shadow-inner"
                                 placeholder="Расскажите коротко о вашей задаче или процессах..."
+                                disabled={status === 'loading'}
                             ></textarea>
                         </div>
 
                         <button
                             type="submit"
-                            className="w-full bg-gradient-to-r from-primary to-primary-light hover:from-primary-light hover:to-accent text-white font-bold py-5 rounded-2xl flex items-center justify-center gap-3 text-lg hover:-translate-y-[2px] transition-all duration-300 shadow-[0_10px_30px_rgba(123,97,255,0.3)] hover:shadow-[0_15px_40px_rgba(123,97,255,0.5)] cursor-pointer mt-2"
+                            disabled={status === 'loading'}
+                            className="w-full bg-gradient-to-r from-primary to-primary-light hover:from-primary-light hover:to-accent text-white font-bold py-5 rounded-2xl flex items-center justify-center gap-3 text-lg hover:-translate-y-[2px] transition-all duration-300 shadow-[0_10px_30px_rgba(123,97,255,0.3)] hover:shadow-[0_15px_40px_rgba(123,97,255,0.5)] cursor-pointer mt-2 disabled:opacity-70 disabled:hover:translate-y-0"
                         >
-                            <span>Отправить заявку</span>
-                            <ArrowRight size={20} className="animate-pulse" />
+                            <span>{status === 'loading' ? 'Отправка...' : 'Отправить заявку'}</span>
+                            {status === 'loading' ? (
+                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            ) : (
+                                <ArrowRight size={20} className="animate-pulse" />
+                            )}
                         </button>
+
+                        <AnimatePresence>
+                            {status === 'success' && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    className="absolute -bottom-16 left-0 right-0 p-4 rounded-xl bg-green-500/20 border border-green-500/30 flex items-center gap-3 text-green-400 font-medium backdrop-blur-md"
+                                >
+                                    <CheckCircle2 className="w-5 h-5" />
+                                    <span>Заявка отправлена! Проверьте почту 📧</span>
+                                </motion.div>
+                            )}
+                            {status === 'error' && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    className="absolute -bottom-16 left-0 right-0 p-4 rounded-xl bg-red-500/20 border border-red-500/30 flex items-center gap-3 text-red-400 font-medium backdrop-blur-md"
+                                >
+                                    <AlertCircle className="w-5 h-5" />
+                                    <span>{errorMessage}</span>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </form>
                 </motion.div>
             </div>
