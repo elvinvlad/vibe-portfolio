@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User, Mail, ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react';
 
-const WEBHOOK_URL = 'https://vlados-ai.ru/webhook/vlados-form';
+const WEBHOOK_URL = 'https://vlados-ai.store/webhook-test/vlados-form';
 
 export default function Contact() {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -15,7 +15,7 @@ export default function Contact() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
             setErrorMessage('Пожалуйста, заполните все поля');
             setStatus('error');
@@ -29,24 +29,35 @@ export default function Contact() {
         try {
             const response = await fetch(WEBHOOK_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(formData),
             });
 
-            const result = await response.json();
-
-            if (result.success !== false) { // Assuming success or empty n8n response means OK
+            if (response.ok) {
                 setStatus('success');
                 setFormData({ name: '', email: '', message: '' });
                 setTimeout(() => setStatus('idle'), 5000);
             } else {
-                throw new Error('Server error');
+                let errorText = await response.text();
+                throw new Error(`Server returned ${response.status}: ${errorText}`);
             }
         } catch (error) {
             console.error('Form submission error:', error);
             setStatus('error');
-            setErrorMessage('Ошибка отправки. Попробуйте ещё раз.');
-            setTimeout(() => setStatus('idle'), 5000);
+            
+            // Helpful error messages based on common n8n issues
+            if (error.message.includes('Failed to fetch')) {
+                setErrorMessage('Ошибка сети. Проверьте настройки CORS в n8n.');
+            } else if (error.message.includes('1 call') || error.message.includes('not registered') || error.message.includes('404')) {
+                setErrorMessage('Webhook не активен. Нажмите "Execute workflow" в n8n.');
+            } else {
+                setErrorMessage('Ошибка отправки. Детали в консоли.');
+            }
+            
+            setTimeout(() => setStatus('idle'), 6000);
         }
     };
 
