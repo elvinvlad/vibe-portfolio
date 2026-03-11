@@ -11,7 +11,7 @@ export function Header() {
 
     const links = [
         { label: 'Услуги', href: '#features' },
-        { label: 'Портфолио', href: '#social-proof' },
+        { label: 'Обо мне', href: '#about' },
         { label: 'Контакты', href: '#contact' },
     ];
 
