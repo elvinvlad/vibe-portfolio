@@ -46,7 +46,7 @@ export const features = [
 ];
 
 export const socialLinks = [
-    { name: 'Telegram', href: '#', icon: 'Send' },
-    { name: 'YouTube', href: '#', icon: 'Youtube' },
-    { name: 'GitHub', href: '#', icon: 'Github' },
+    { name: 'Telegram', href: 'https://t.me/vlados_aii', icon: 'Telegram' },
+    { name: 'Instagram', href: 'https://www.instagram.com/vlados.ai/', icon: 'Instagram' },
+    { name: 'TikTok', href: 'https://www.tiktok.com/@vlados.ai', icon: 'TikTok' },
 ];

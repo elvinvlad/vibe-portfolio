@@ -1,11 +1,15 @@
 import React from 'react';
-import { Send, Youtube, Github } from 'lucide-react';
+import { Send, Instagram } from 'lucide-react';
 import { socialLinks } from '../../Network/data';
 
 const iconMap = {
-    Send: <Send size={20} />,
-    Youtube: <Youtube size={20} />,
-    Github: <Github size={20} />
+    Telegram: <Send size={20} />,
+    Instagram: <Instagram size={20} />,
+    TikTok: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+        </svg>
+    )
 };
 
 export default function Footer() {

@@ -51,7 +51,7 @@ export default function BottomCTA() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.3, duration: 0.8 }}
-                    className="font-heading text-4xl md:text-6xl font-black text-white mb-8 leading-[1.1]"
+                    className="font-heading text-[2rem] leading-[1.1] sm:text-4xl md:text-6xl font-black text-white mb-8 break-words"
                 >
                     Готовы оптимизировать ваш бизнес?
                 </motion.h2>
