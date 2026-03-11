@@ -31,6 +31,8 @@ export default function Footer() {
                         <a
                             key={link.name}
                             href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-text-body hover:text-white hover:bg-primary/20 hover:-translate-y-1 transition-all duration-300"
                             aria-label={link.name}
                         >
