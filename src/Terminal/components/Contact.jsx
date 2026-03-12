@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User, Mail, ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react';
 
-const WEBHOOK_URL = 'https://vlados-ai.store/webhook-test/vlados-form';
+const WEBHOOK_URL = 'https://vlados-ai.store/webhook/vlados-form';
 
 export default function Contact() {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -47,7 +47,7 @@ export default function Contact() {
         } catch (error) {
             console.error('Form submission error:', error);
             setStatus('error');
-            
+
             // Helpful error messages based on common n8n issues
             if (error.message.includes('Failed to fetch')) {
                 setErrorMessage('Ошибка сети. Проверьте настройки CORS в n8n.');
@@ -56,7 +56,7 @@ export default function Contact() {
             } else {
                 setErrorMessage('Ошибка отправки. Детали в консоли.');
             }
-            
+
             setTimeout(() => setStatus('idle'), 6000);
         }
     };
